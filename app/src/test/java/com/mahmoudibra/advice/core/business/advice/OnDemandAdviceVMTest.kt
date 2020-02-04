@@ -83,8 +83,6 @@ class OnDemandAdviceVMTest {
     // having an issue returning Exception from the Api Call with coroutines
     @Test
     fun `Fetch Advice Repos On Start And return EOFException Exception`() {
-        val adviceFakeResponse = AdviceModel(fortune = listOf("Advice one"))
-        val successResult = Result.success(adviceFakeResponse)
         coEvery { advicesRepository.fetchAdvice() } answers { Result.serverError(exception = EOFException()) }
 
         onDemandAdviceVM.hydrate()
