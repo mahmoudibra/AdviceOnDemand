@@ -1,0 +1,62 @@
+apply plugin: 'jacoco'
+
+repositories {
+    jcenter()
+}
+
+configurations {
+    jacoco
+}
+
+jacoco {
+    toolVersion = "0.8.3"
+}
+
+def androidExclusion = [
+        '**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', '**/platform/**/*.*', 'android/**/*.*', '**/*$[0-9].*'
+]
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
+    group = "Reporting"
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: androidExclusion)
+    def mainSrc = "$project.projectDir/src/main/java/core"
+
+    getSourceDirectories().from(files([mainSrc]))
+    getClassDirectories().from(files([debugTree]))
+    getExecutionData().from(fileTree(dir: project.buildDir, includes: [
+            'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
+    ]))
+}
+
+
+task jacocoVerificationTask(type: JacocoCoverageVerification, dependsOn: 'jacocoTestReport') {
+    group = "Reporting"
+    def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: androidExclusion)
+    def mainSrc = "$project.projectDir/src/main/java/core"
+
+    getSourceDirectories().from(files([mainSrc]))
+    getClassDirectories().from(files([debugTree]))
+    getExecutionData().from(fileTree(dir: project.buildDir, includes: [
+            'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
+    ]))
+
+    violationRules {
+        setFailOnViolation(true)
+        rule {
+            limit {
+                counter = 'LINE'
+                minimum = 0.0
+            }
+        }
+    }
+}
+
+task getCoverage(type: Exec, dependsOn: 'jacocoTestReport') {
+    group = "Reporting"
+    commandLine "open", "$buildDir/reports/jacoco/jacocoTestReport/html/index.html"
+}

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">On Demand App</string>
+    <string name="on_demand_advice">On Demand Advice</string>
+    <string name="qoute_hint">Qoute Will Show up</string>
+</resources>
