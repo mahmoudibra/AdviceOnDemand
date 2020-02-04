@@ -25,10 +25,10 @@ android {
 
     signingConfigs {
         config {
-            keyAlias 'advice'
-            keyPassword 'advice'
-            storeFile file('./advice.jks')
-            storePassword 'advice'
+            keyAlias 'AdviceOnDemand'
+            keyPassword 'AdviceOnDemand'
+            storeFile file('./AdviceOnDemand.jks')
+            storePassword 'AdviceOnDemand'
         }
     }
 
