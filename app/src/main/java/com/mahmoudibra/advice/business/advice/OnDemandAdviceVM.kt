@@ -9,7 +9,7 @@ import java.io.EOFException
 import kotlinx.coroutines.launch
 
 class OnDemandAdviceVM(
-    private val trendingGithubReposRepository: AdvicesRepository
+    private val adviceRepository: AdvicesRepository
 ) : BaseVM() {
 
     var advice: ObservableField<String> = ObservableField("")
@@ -21,21 +21,20 @@ class OnDemandAdviceVM(
     private fun fetchAdvice() {
         wrapEspressoIdlingResource {
             viewModelScope.launch {
-
                 val response =
-                    trendingGithubReposRepository.fetchAdvice()
+                    adviceRepository.fetchAdvice()
                 when (response) {
                     is Result.Success -> {
                         advice.set(response.data.fortune[0])
                     }
                     is Result.SystemError -> {
                         advice.set(fallbackAdvice)
-                        fetchAdvice()
+//                        fetchAdvice()
                     }
                     is Result.ServerError -> {
                         advice.set(fallbackAdvice)
                         if (!(response.exception is EOFException)) {
-                            fetchAdvice()
+//                            fetchAdvice()
                         }
                     }
                 }
