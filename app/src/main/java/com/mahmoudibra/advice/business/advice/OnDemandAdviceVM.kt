@@ -29,12 +29,12 @@ class OnDemandAdviceVM(
                     }
                     is Result.SystemError -> {
                         advice.set(fallbackAdvice)
-//                        fetchAdvice()
+                        fetchAdvice()
                     }
                     is Result.ServerError -> {
                         advice.set(fallbackAdvice)
                         if (!(response.exception is EOFException)) {
-//                            fetchAdvice()
+                            fetchAdvice()
                         }
                     }
                 }
