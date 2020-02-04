@@ -1,4 +1,4 @@
-name: Android App CI
+name: Advice App CI
 
 on: [push]
 
