@@ -21,8 +21,10 @@ class OnDemandAdviceVM(
     private fun fetchAdvice() {
         wrapEspressoIdlingResource {
             viewModelScope.launch {
+                _inProgress.value = true
                 val response =
                     adviceRepository.fetchAdvice()
+                _inProgress.value = false
                 when (response) {
                     is Result.Success -> {
                         advice.set(response.data.fortune[0])

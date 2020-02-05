@@ -1,7 +1,7 @@
-package com.mahmoudibra.advice.core.business.advice
+package com.mahmoudibra.advice.core.business.adviceTest
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth
+import com.mahmoudibra.MainCoroutineRule
 import com.mahmoudibra.advice.business.advice.AdviceModel
 import com.mahmoudibra.advice.business.advice.AdvicesRepository
 import com.mahmoudibra.advice.business.advice.OnDemandAdviceVM
@@ -17,7 +17,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+
+
 class OnDemandAdviceVMTest {
+
 
     // Subject under test
     private lateinit var onDemandAdviceVM: OnDemandAdviceVM
@@ -27,10 +30,6 @@ class OnDemandAdviceVMTest {
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
-    // Executes each task synchronously using Architecture Components.
-    @get:Rule
-    var instantExecutorRule = InstantTaskExecutorRule()
-
     @Before
     fun setupViewModel() {
         onDemandAdviceVM =
@@ -38,6 +37,7 @@ class OnDemandAdviceVMTest {
                 adviceRepository = advicesRepository
             )
     }
+
 
     @Test
     fun `Fetch advice On Start And Return data successfully`() {

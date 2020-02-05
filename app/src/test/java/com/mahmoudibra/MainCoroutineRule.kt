@@ -1,4 +1,4 @@
-package com.mahmoudibra.advice.core.business.advice
+package com.mahmoudibra
 
 import kotlin.coroutines.ContinuationInterceptor
 import kotlinx.coroutines.CoroutineDispatcher
